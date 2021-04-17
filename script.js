@@ -5,15 +5,16 @@ let cellvisit = []
 
 cellList.forEach((currentCell,i)=>{
     cellvisit.push(0)
-    currentCell.addEventListener('click', ()=>{      
-        cellvisit[i] = 1
+    currentCell.addEventListener('click', ()=>{ 
+        if(cellvisit[i]==0){
+            cellvisit[i] = 1
         let sign = getSign()
         let classList = currentCell.classList.value.split(' ')
             removeExtraClasses(classList, currentCell)       
             currentCell.classList.add(sign)
         countMarked += 1
         markWave()
-
+        } 
     })
 })
 
