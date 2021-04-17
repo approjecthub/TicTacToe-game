@@ -1,0 +1,93 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+.game-board{
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+}
+
+.cell{
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  position: relative;
+  cursor:pointer;
+}
+
+.x::before,.x::after{
+    content: '';
+    height: 70px;
+    width: 10px;
+    background-color: black;
+    position: absolute;
+}
+
+.x::before{
+    transform: rotate(45deg);
+}
+
+.x::after{
+    transform: rotate(-45deg);
+}
+
+.o::before, .o::after{
+    content: '';
+    height: 70px;
+    width: 70px;
+    position: absolute; 
+    border-radius: 50%;
+}
+
+.o::before{
+    height: 70px;
+    width: 70px;
+    background-color: black;
+}
+
+.o::after{
+    height: 60px;
+    width: 50px;
+    background-color: white;
+}
+
+.cell.o:not(.wave), .cell.x:not(.wave){
+    cursor: not-allowed;
+}
+
+.cell.wave.x::before, .cell.wave.x::after{
+    display: none;
+}
+
+.cell.wave:hover.x::before,.cell.wave:hover.x::after{
+    display: block;
+    background-color: rgba(0, 0, 0, 0.26);
+    cursor: pointer;
+}
+
+.cell.wave.o::before, .cell.wave.o::after{
+    display: none;
+}
+
+.cell.wave:hover.o::before{
+    display: block;
+    background-color: rgba(0, 0, 0, 0.26);
+    cursor: pointer;
+}
+.cell.wave:hover.o::after{
+    cursor: pointer;
+    display: block;
+}
