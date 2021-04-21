@@ -1,19 +1,98 @@
 const cellList = Array.from(document.getElementsByClassName('cell'))
 let countMarked = 0
 
+let n = Math.floor(Math.sqrt(cellList.length))
+
 let cellvisit = []
+
+const signMap = {
+    'x':1,
+    'o':2
+}
+
+function checkWinning(sign){
+    let count = 0
+    
+    //top row checking
+    for(let i=0;i<n && cellvisit[i]==signMap[sign];i++){ count++}
+    if(count==n){
+        return true
+    }
+
+    //bottom row checking
+    count=0
+    for(let i=cellList.length-3;i<cellList.length && cellvisit[i]==signMap[sign];i++)
+    {
+        count++
+    }
+    if(count==n){
+        return true
+    }
+
+    //left column checking
+    count = 0
+    let i=0
+    while(count<n && cellvisit[i]==signMap[sign]){
+        i += n 
+        count++
+    }
+    if(count==n){
+        return true
+    }
+
+    //right column checking
+    i = n-1
+    count = 0 
+    while(count<n && cellvisit[i]==signMap[sign]){
+        i+=n 
+        count++
+    }
+    if(count==n){
+        return true
+    }
+
+    //left corner checking
+    i = 0
+    count = 0
+    while(count<n && cellvisit[i]==signMap[sign]){
+        i+=n+1
+        count++
+    }
+    if(count==n){
+        return true
+    }
+
+    //right corner checking
+    i=n-1
+    count = 0
+    while(count<n && cellvisit[i]==signMap[sign]){
+        i+=n-1
+        count++
+    }
+    if(count==n){
+        return true
+    }
+    return false
+    
+}
 
 cellList.forEach((currentCell,i)=>{
     cellvisit.push(0)
     currentCell.addEventListener('click', ()=>{ 
+        
         if(cellvisit[i]==0){
-            cellvisit[i] = 1
-        let sign = getSign()
+            let sign = getSign()
+            cellvisit[i] = signMap[sign]
+        
         let classList = currentCell.classList.value.split(' ')
             removeExtraClasses(classList, currentCell)       
             currentCell.classList.add(sign)
         countMarked += 1
         markWave()
+        if(checkWinning(sign)){
+            alert(sign + " won!!")
+            window.location.reload()
+        }
         } 
     })
 })
